@@ -17,6 +17,7 @@ private:
     QString findFile(QDir, QString);
 
 signals:
+    void deleted(int);
 
 public slots:
     void cleanFile(int, QString, uint);

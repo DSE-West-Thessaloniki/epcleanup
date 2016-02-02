@@ -17,6 +17,7 @@ signals:
 public slots:
     void replyFinished(QNetworkReply*);
     void getUpdate(void);
+    void pushDelete(int);
 
 private:
     QUrl url;

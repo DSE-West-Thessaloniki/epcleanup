@@ -29,10 +29,15 @@ void Reader::replyFinished(QNetworkReply *reply)
             jobj = jdoc.object();
 
             // Έλεγχος τιμών
-            jarray = jobj.value("files").toArray();
-            for (int i=0; i<jarray.size(); i++) {
-                jfobj = jarray[i].toObject();
-                emit fileRead(jfobj.value("id").toInt(), jfobj.value("filename").toString(), (uint) jfobj.value("timestamp").toInt());
+            if (!jobj.value("done").isUndefined()) {
+                logger.write(QString("File "+jobj.value("done").toString()+" is deleted"));
+            }
+            else {
+                jarray = jobj.value("files").toArray();
+                for (int i=0; i<jarray.size(); i++) {
+                    jfobj = jarray[i].toObject();
+                    emit fileRead(jfobj.value("id").toInt(), jfobj.value("filename").toString(), (uint) jfobj.value("timestamp").toInt());
+                }
             }
         }
         else {
@@ -50,4 +55,9 @@ void Reader::replyFinished(QNetworkReply *reply)
 void Reader::getUpdate(void)
 {
     networkManager->get(QNetworkRequest(url));
+}
+
+void Reader::pushDelete(int id)
+{
+    networkManager->get(QNetworkRequest(QUrl(url.toString()+QString("?del=")+QString::number(id))));
 }

@@ -20,6 +20,8 @@ void Cleaner::cleanFile(int id, QString filename, uint timestamp)
             if (!(tmp.isNull() || tmp.isNull())) {
                 result = QFile::remove(tmp);
                 logger.write(QString("Remove file ") + tmp + ". Result: " + result);
+                if (result)
+                    emit deleted(id);
             }
             else {
                 logger.write(QString("Not found!"));

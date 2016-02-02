@@ -23,13 +23,15 @@ int main(int argc, char *argv[])
     logger.write(QString("Url: " + url.toString()));
 
     timer = new QTimer();
-    timer->start(1000);
+    timer->start(2000);
 
     Reader *reader = new Reader(url);
     Cleaner *cleaner = new Cleaner(path);
 
     QObject::connect(reader, SIGNAL(fileRead(int,QString,int)),
                      cleaner, SLOT(cleanFile(int,QString,uint)));
+    QObject::connect(cleaner, SIGNAL(deleted(int)),
+                     reader, SLOT(pushDelete(int)));
     QObject::connect(timer, SIGNAL(timeout()),
                      reader, SLOT(getUpdate()));
 
