@@ -12,7 +12,7 @@ public:
     explicit Reader(QUrl url, QObject *parent = 0);
 
 signals:
-    void fileRead(int, QString, int);
+    void fileRead(int, QString, uint);
 
 public slots:
     void replyFinished(QNetworkReply*);

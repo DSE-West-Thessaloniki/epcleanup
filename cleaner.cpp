@@ -19,7 +19,7 @@ void Cleaner::cleanFile(int id, QString filename, uint timestamp)
             tmp = findFile(path, filename);
             if (!(tmp.isNull() || tmp.isNull())) {
                 result = QFile::remove(tmp);
-                logger.write(QString("Remove file ") + tmp + ". Result: " + result);
+                logger.write(QString("Remove file ") + tmp + ". Result: " + (result?"true":"false"));
                 if (result)
                     emit deleted(id);
             }
@@ -27,6 +27,12 @@ void Cleaner::cleanFile(int id, QString filename, uint timestamp)
                 logger.write(QString("Not found!"));
             }
         }
+        else {
+            logger.write(QString("Invalid filename of ") + filename);
+        }
+    }
+    else {
+        logger.write(QString("Invalid id of ") + QString::number(id));
     }
 }
 
