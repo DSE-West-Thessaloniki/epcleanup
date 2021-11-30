@@ -12,7 +12,7 @@ RUN echo "deb http://pkg.mxe.cc/repos/apt focal main" >/etc/apt/sources.list.d/m
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86B72ED9
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y mxe-i686-w64-mingw32.shared-qt5
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y mxe-i686-w64-mingw32.static-qt5
 
 ENV PATH=/usr/lib/mxe/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
