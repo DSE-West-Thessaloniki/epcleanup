@@ -5,7 +5,7 @@ extern Logger logger;
 
 Cleaner::Cleaner(QString path, QObject *parent) : QObject(parent)
 {
-    this->path = path;
+    this->path.setPath(path);
 }
 
 void Cleaner::cleanFile(int id, QString filename, uint timestamp)
