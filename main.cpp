@@ -5,22 +5,28 @@
 #include "cleaner.h"
 #include "logger.h"
 
-Logger logger("epcleanup.log");
+Logger logger;
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    QString path;
+    QString path, log;
     QUrl url;
     QSettings *settings;
     QTimer *timer;
 
-    logger.write(QString("Initializing..."));
     settings = new QSettings("epcleanup.ini", QSettings::IniFormat);
     path = settings->value("path", "").toString();
-    logger.write(QString("Path: " + path));
     url = settings->value("url", "").toUrl();
+    log = settings->value("log", "").toString();
+    if (log == "1" || log.toLower() == "true") {
+        logger.open("epcleanup.log");
+    }
+
+    logger.write(QString("Initializing..."));
+    logger.write(QString("Path: " + path));
     logger.write(QString("Url: " + url.toString()));
+    logger.write(QString("Log: " + log));
 
     timer = new QTimer();
     timer->start(10000);
