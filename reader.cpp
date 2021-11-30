@@ -24,7 +24,6 @@ void Reader::replyFinished(QNetworkReply *reply)
     QJsonObject jobj, jfobj;
     QJsonArray jarray;
 
-    qDebug() << "Got reply!";
     if (reply->error() == QNetworkReply::NoError) {
         jdoc = QJsonDocument::fromJson(reply->readAll(), &jerr);
         if (jerr.error == QJsonParseError::NoError) {
@@ -38,19 +37,16 @@ void Reader::replyFinished(QNetworkReply *reply)
                 jarray = jobj.value("files").toArray();
                 for (int i=0; i<jarray.size(); i++) {
                     jfobj = jarray[i].toObject();
-                    qDebug() << "File to be removed: " << jfobj.value("id").toInt() << " -- " << jfobj.value("fileName").toString();
                     logger.write(QString("File to be removed: ") + jfobj.value("fileName").toString());
                     emit fileRead(jfobj.value("id").toInt(), jfobj.value("fileName").toString(), (uint) jfobj.value("unixTime").toInt());
                 }
             }
         }
         else {
-            qDebug() << "Json Error: " << jerr.errorString();
             logger.write(QString("Json Error: ") + jerr.errorString());
         }
     }
     else {
-        qDebug() << "Network Error: " << reply->errorString();
         logger.write(QString("Network Error: ") + reply->errorString());
     }
     reply->deleteLater();
@@ -58,7 +54,6 @@ void Reader::replyFinished(QNetworkReply *reply)
 
 void Reader::getUpdate(void)
 {
-    qDebug() << "Here!";
     networkManager->get(QNetworkRequest(url));
 }
 
