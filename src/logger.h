@@ -1,29 +1,28 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <QObject>
-#include <QFile>
-#include <QTextStream>
 #include <QDateTime>
+#include <QFile>
+#include <QObject>
+#include <QTextStream>
 
-class Logger : public QObject
-{
-Q_OBJECT
+class Logger : public QObject {
+  Q_OBJECT
 
 public:
-    explicit Logger(QObject *parent=0);
-    explicit Logger(QString fileName, QObject *parent=0);
-    ~Logger();
-    void setShowDateTime(bool value);
-    void close(void);
-    void open(QString fileName);
+  explicit Logger(QObject *parent = 0);
+  explicit Logger(QString fileName, QObject *parent = 0);
+  ~Logger();
+  void setShowDateTime(bool value);
+  void close(void);
+  void open(QString fileName);
 
 private:
-    QFile *file = nullptr;
-    bool m_showDate;
+  QFile *file = nullptr;
+  bool m_showDate;
 
 public slots:
-    void write(const QString &value);
+  void write(const QString &value);
 };
 
 extern Logger logger;
